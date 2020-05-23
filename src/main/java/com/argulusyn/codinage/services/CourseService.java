@@ -4,26 +4,25 @@ import com.argulusyn.codinage.persistence.dto.CourseDto;
 import com.argulusyn.codinage.persistence.dto.CreateCourseDto;
 import com.argulusyn.codinage.persistence.dto.GenericCourseDto;
 import com.argulusyn.codinage.persistence.model.Course;
-import com.argulusyn.codinage.persistence.model.sections.*;
-import com.argulusyn.codinage.persistence.model.sections.subsections.ImageSubsection;
-import com.argulusyn.codinage.persistence.model.sections.subsections.Subsection;
-import com.argulusyn.codinage.persistence.model.sections.subsections.SubsectionType;
-import com.argulusyn.codinage.persistence.model.sections.subsections.TextSubsection;
+import com.argulusyn.codinage.persistence.model.User;
 import com.argulusyn.codinage.persistence.repository.CourseRepository;
 import com.argulusyn.codinage.utils.CourseObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
     CourseRepository courseRepository;
+    UserService userService;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, UserService userService) {
         this.courseRepository = courseRepository;
+        this.userService = userService;
     }
 
     public Long createNewCourse(CreateCourseDto createCourseDto) {
@@ -61,6 +60,24 @@ public class CourseService {
     }
 
     public void deleteCourse(Long id) {
+        Course course = getCourseById(id);
+        course.getUsers().removeAll(course.getUsers());
         this.courseRepository.deleteById(id);
+    }
+
+    public void finishCourse(Long courseId, Long userId, Long rating) {
+        Course course = getCourseById(courseId);
+        User user = userService.findUserById(userId);
+        Set<User> courseUsers = course.getUsers();
+
+        if (courseUsers.contains(user)) {
+            return;
+        }
+
+        Long totalRating = course.getTotalRating() + rating;
+        courseUsers.add(user);
+        course.setTotalRating(totalRating);
+
+        this.courseRepository.save(course);
     }
 }

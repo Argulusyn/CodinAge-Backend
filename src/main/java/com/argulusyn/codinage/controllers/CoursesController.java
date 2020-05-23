@@ -2,6 +2,7 @@ package com.argulusyn.codinage.controllers;
 
 import com.argulusyn.codinage.persistence.dto.CourseDto;
 import com.argulusyn.codinage.persistence.dto.CreateCourseDto;
+import com.argulusyn.codinage.persistence.dto.FinishCourseDto;
 import com.argulusyn.codinage.persistence.dto.GenericCourseDto;
 import com.argulusyn.codinage.persistence.model.Course;
 import com.argulusyn.codinage.services.CourseService;
@@ -47,6 +48,12 @@ public class CoursesController {
     ResponseEntity<Long> createCourse(@RequestBody CreateCourseDto createCourseDto) {
         Long newCourseId = this.courseService.createNewCourse(createCourseDto);
         return new ResponseEntity<>(newCourseId, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/finish/{id}")
+    ResponseEntity finishCourse(@PathVariable Long id, @RequestBody FinishCourseDto finishCourseDto) {
+        this.courseService.finishCourse(id, finishCourseDto.getUserId(), finishCourseDto.getRating());
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @GetMapping

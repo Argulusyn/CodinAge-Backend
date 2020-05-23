@@ -33,7 +33,12 @@ public class Course {
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Section> sections;
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(
+            name = "user_course",
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
     Set<User> users;
 
     public Course() {

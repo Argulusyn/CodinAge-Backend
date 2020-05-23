@@ -18,12 +18,7 @@ public class User {
     private UserRole role;
     private Long scores = 0L;
 
-    @ManyToMany(targetEntity = Course.class, cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "user_course",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "course_id")}
-    )
+    @ManyToMany(mappedBy = "users")
     private Set<Course> courses;
 
     public User() {
