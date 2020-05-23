@@ -37,6 +37,12 @@ public class CoursesController {
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
+    @DeleteMapping("/{id}")
+    ResponseEntity deleteCourse(@PathVariable Long id) {
+        this.courseService.deleteCourse(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping("/create")
     ResponseEntity<Long> createCourse(@RequestBody CreateCourseDto createCourseDto) {
         Long newCourseId = this.courseService.createNewCourse(createCourseDto);

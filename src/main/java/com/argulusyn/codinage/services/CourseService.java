@@ -59,4 +59,8 @@ public class CourseService {
         List<Course> courses = this.courseRepository.findAll();
         return courses.stream().map(CourseObjectMapper::mapCourseToCourseDto).collect(Collectors.toList());
     }
+
+    public void deleteCourse(Long id) {
+        this.courseRepository.deleteById(id);
+    }
 }
