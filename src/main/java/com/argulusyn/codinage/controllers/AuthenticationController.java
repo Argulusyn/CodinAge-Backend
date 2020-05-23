@@ -29,23 +29,25 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     ResponseEntity registerUser(@Valid @RequestBody RegisterUserDto registerUserDto) {
-        User user = this.userService.findUserByUsername(registerUserDto.getUsername());
+        User user = userService.findUserByUsername(registerUserDto.getUsername());
 
         if (user != null) {
             return new ResponseEntity("ALREADY_EXIST", HttpStatus.BAD_REQUEST);
         }
 
         String encodedPassword = encodePassword(registerUserDto.getPassword());
-        User newUser = new User.UserBuilder(registerUserDto.getUsername(), encodedPassword)
-                .email(registerUserDto.getEmail())
-                .role(UserRole.USER)
-                .firstName(registerUserDto.getFirstName())
-                .lastName(registerUserDto.getLastName())
+        User newUser = new User.UserBuilder()
+                .withUsername(registerUserDto.getUsername())
+                .withPassword(encodedPassword)
+                .withEmail(registerUserDto.getEmail())
+                .withRole(UserRole.USER)
+                .withFirstName(registerUserDto.getFirstName())
+                .withLastName(registerUserDto.getLastName())
                 .build();
 
-        userService.saveUser(newUser);
+        User savedUser = userService.saveUser(newUser);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(new LoginUserResponseDto(savedUser.getId(), savedUser.getRole()), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

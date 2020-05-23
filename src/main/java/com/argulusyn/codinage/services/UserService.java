@@ -18,7 +18,7 @@ public class UserService {
         return this.userRepository.findByUsername(username);
     }
 
-    public void saveUser(User user) {
-        this.userRepository.save(user);
+    public User saveUser(User user) {
+        return this.userRepository.save(user);
     }
 }

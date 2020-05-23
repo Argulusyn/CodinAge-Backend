@@ -1,9 +1,11 @@
 package com.argulusyn.codinage.persistence.model.sections.subsections;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 public class TextSubsection extends Subsection {
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     public TextSubsection() {

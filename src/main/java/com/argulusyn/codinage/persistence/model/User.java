@@ -29,18 +29,6 @@ public class User {
     public User() {
     }
 
-    public User(UserBuilder builder) {
-        this.username = builder.username;
-        this.email = builder.email;
-        this.password = builder.password;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.avatar = builder.avatar;
-        this.role = builder.role;
-        this.scores = builder.scores;
-        this.courses = builder.courses;
-    }
-
     public User(String username, String email, String password, String firstName, String lastName, String avatar, UserRole role, Long scores, Set<Course> courses) {
         this.username = username;
         this.email = email;
@@ -133,10 +121,11 @@ public class User {
         this.courses = courses;
     }
 
-    public static class UserBuilder {
-        private final String username;
-        private final String password;
+    public static final class UserBuilder {
+        private Long id;
+        private String username;
         private String email;
+        private String password;
         private String firstName;
         private String lastName;
         private String avatar;
@@ -144,48 +133,76 @@ public class User {
         private Long scores = 0L;
         private Set<Course> courses;
 
-        public UserBuilder(String username, String password) {
-            this.username = username;
-            this.password = password;
+        public UserBuilder() {
         }
 
-        public UserBuilder email(String email) {
+        public static UserBuilder anUser() {
+            return new UserBuilder();
+        }
+
+        public UserBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder withEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public UserBuilder firstName(String firstName) {
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public UserBuilder lastName(String lastName) {
+        public UserBuilder withLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public UserBuilder avatar(String avatar) {
+        public UserBuilder withAvatar(String avatar) {
             this.avatar = avatar;
             return this;
         }
 
-        public UserBuilder role(UserRole role) {
+        public UserBuilder withRole(UserRole role) {
             this.role = role;
             return this;
         }
 
-        public UserBuilder scores(Long scores) {
+        public UserBuilder withScores(Long scores) {
             this.scores = scores;
             return this;
         }
 
-        public UserBuilder courses(Set<Course> courses) {
+        public UserBuilder withCourses(Set<Course> courses) {
             this.courses = courses;
             return this;
         }
 
         public User build() {
-            return new User(this);
+            User user = new User();
+            user.setId(id);
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setAvatar(avatar);
+            user.setRole(role);
+            user.setScores(scores);
+            user.setCourses(courses);
+            return user;
         }
     }
 }

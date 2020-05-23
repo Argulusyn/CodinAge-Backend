@@ -1,9 +1,11 @@
 package com.argulusyn.codinage.persistence.model.sections.subsections;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 public class ImageSubsection extends Subsection {
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String source;
     private String caption;
 

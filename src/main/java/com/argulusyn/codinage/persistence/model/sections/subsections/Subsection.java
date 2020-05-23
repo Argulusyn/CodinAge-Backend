@@ -22,4 +22,24 @@ public abstract class Subsection {
     public SubsectionType getType() {
         return type;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ArticleSection getArticleSection() {
+        return articleSection;
+    }
+
+    public void setArticleSection(ArticleSection articleSection) {
+        this.articleSection = articleSection;
+    }
+
+    public void setType(SubsectionType type) {
+        this.type = type;
+    }
 }

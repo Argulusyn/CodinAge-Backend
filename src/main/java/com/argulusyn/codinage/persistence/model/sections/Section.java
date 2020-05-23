@@ -28,6 +28,12 @@ public class Section {
         this.description = description;
     }
 
+    public Section(String title, String description, SectionType type) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+    }
+
     public Long getId() {
         return id;
     }
@@ -50,5 +56,21 @@ public class Section {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public SectionType getType() {
+        return type;
+    }
+
+    public void setType(SectionType type) {
+        this.type = type;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
