@@ -11,7 +11,7 @@
 	<groupId>com.argulusyn</groupId>
 	<artifactId>codinage</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>CodinAge</name>
 	<description>System to manage online courses</description>
 
